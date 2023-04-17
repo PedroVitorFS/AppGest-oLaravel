@@ -190,3 +190,123 @@ $contatos = SiteContato::orderBy('nome', 'asc')->orderBy('motivo_contato', 'desc
 ```
 
 ## Eloquent - Introdução a Collections
+Introdução a manipulação das Collections (Matriz de dados)
+
+## Eloquent - Collection first, last e reverse
+Podemos pegar o primeiro ou ultimo elemento de uma collection utilizando o método first() e last()
+```
+use \App\Models\SiteContato;
+
+$contatos = SiteContato::orderBy('nome', 'asc')->orderBy('motivo_contato', 'desc');//busca ascendente
+$primeiro = $contatos->first(); //pega o primeiro elemento
+$ultimo = $contatos->last(); //pega o ultimo elemento 
+$reverso = $contatos->reverse(); //inverte a ordem dos elementos
+```
+
+## Eloquent - Collection toArray e toJson
+O Collection é convertido para Array e para Json. Portanto os métodos de collection não podem ser usado nessas notações
+```
+use \App\Models\SiteContato;
+
+$contatos = SiteContato::all();
+$array_contatos = $contatos->toArray();
+$json_contatos = $contatos->toJson();
+```
+
+## Eloquent - Collection pluck
+O método pluck permite obter todos os valores de uma determinada chave. Por exemplo se desejarmos obter todos os emails de cada um dos objetos contidos na collection:
+
+```
+use \App\Models\SiteContato;
+
+$contatos = SiteContato::all()->pluck('email');
+
+```
+
+Para criar um array associativo contendo indices basta usar: 
+
+```
+use \App\Models\SiteContato;
+
+$contatos = SiteContato::all()->pluck('email', 'nome); // Emails com indices do nome
+
+```
+
+## Eloquent - Atualizando Registros (save)
+Para atualizar um dado no banco, basta buscar o elemento pelo id no banco de dados altera-lo e salva-lo. Exemplo:
+
+```
+use \App\Models\Fornecedor;
+
+$fornecedor = Fornecedor::find(1);
+$fornecedor->email = "email.alterador@gmail.com";
+$fornecedor->site = 'fornecedor.com.br";
+$fornecedor->save();
+
+```
+
+## Eloquent - Atualizando Registros (fill e save)
+Com o método fill é possível atualizar um array associativo de forma mais enxuta. Digamos que queremos atualizar um fornecedor de id 2 para atualizar o nome email e site:
+
+```
+use \App\Models\Fornecedor;
+
+$fornecedor = Fornecedor::find(2);
+$fornecedor->fill(['nome'=> 'fornecedor', 'email' => 'fornecedor.fill@gmail.com', 'site' => fornecedorfill.com.br']);
+$fornecedor->save();
+```
+
+## Eloquent - Atualizando Registros (where e update)
+É possível utilizar filtro de registro com a cláusula update.
+
+```
+use \App\Models\Fornecedor;
+
+$fornecedor = Fornecedor::whereIn('id' , [1,2])
+                        ->update(['nome' => 'Fornecedor Teste', 'site' => 'teste.com.br']);
+
+```
+
+
+## Eloquent - Deletando Registros (delete e destroy)
+Digamos que nosso objetivo é remover o contato do id 4.
+
+```
+use \App\Models\SiteContato;
+
+$contato = SiteContato::find(4);
+$contato->delete();
+
+SiteContato::where('id', 7)->delete(4); //Retornará 1, dizendo que 1 elemento foi removido
+
+SiteContato::destroy(4);
+```
+
+## Eloquent - Deletando registros com DeleteSoft
+O DeleteSoft faz com que os registros não sejam efetivamente excluídos da tabela, na verdade ele apenas adiciona uma nova coluna a tabela chamada deleted_at. Este recurso é muito interessante quando precisamos inativar registros em uma tabela, mas precisamos mantê-los para fins de históricos. Para forçar que o registro seja realmente excluída deverá usar o método forceDelete
+
+
+```
+//contexto da migration
+Schema::table('fornecedores', function(Blueprint $table){
+            $table->softDeletes();//selecionando onde a coluna será inserida após outra
+        });
+
+
+use \App\Models\Fornecedor;
+
+$fornecedor = Fornecedor::find(2)
+                        ->forceDelete();
+
+```
+
+## Eloquent - Selecionando e restaurante registros deletados com SoftDelete
+Para termos acesso a todos os registros incluindo os que foram deletados no softDelete, podemos usar o withTrashed: 
+
+```
+use \App\Models\Fornecedor;
+
+$fornecedor = Fornecedor::withTrashed()->get();//podemos utilizar  filtros no messe método
+
+$fornecedor[0]->restore();
+```
