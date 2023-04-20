@@ -2,7 +2,7 @@
 
 {{-- Fica o comentário que será descartado pelo interpretador do blade --}}
 
-<?= 'texto de teste' ?>
+<?= '' ?>
 
 @php 
     //Para comentários de uma linha
@@ -11,7 +11,7 @@
         Para comentários de múltiplas linhas
     */
 
-    echo 'texto teste'
+    //echo 'texto teste'
 @endphp
 
 {{-- 
@@ -23,11 +23,6 @@
     boolean = false
     array = []
 --}}
-
-@if(count($fornecedores) > 0 && count($fornecedores) < 10)
-    <h3>Existem alguns fornecedores cadastrados</h3>
-@elseif (count($fornecedores)> 10)
-    <h3>Existem vários fornecedores cadastrados</h3> 
-@else
-    <h3>Ainda não existem fornecedores cadastrados</h3>
-@endif
+@foreach ($fornecedores as $fornecedor)
+   <a>{{$fornecedor}}</a>
+@endforeach

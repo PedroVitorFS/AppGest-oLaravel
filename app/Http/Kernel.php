@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AutenticacaoMiddleware;
+use App\Http\Middleware\LogAcessoMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -36,7 +38,8 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        ],
+            LogAcessoMiddleware::class
+        ], //Todos esse middleware's são rodados em todas a páginas
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
@@ -63,5 +66,7 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'log.acesso' => LogAcessoMiddleware::class,
+        'autenticacao' => AutenticacaoMiddleware::class
     ];
 }

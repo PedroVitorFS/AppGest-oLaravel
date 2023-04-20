@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PrincipalController;
 use App\Http\Controllers\SobreNosController;
 use App\Http\Controllers\TesteController;
+use App\Http\Middleware\LogAcessoMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,10 @@ use App\Http\Controllers\TesteController;
 
 //o comando name permite utilizar o nome da rota por exemplo site.index sem precisar utilizar-se do prefixo absoluto de '/' por exemplo
 
-Route::get('/', [PrincipalController::class, 'principal'])->name('site.index');
+Route::get('/', [PrincipalController::class, 'principal'])
+       // ->middleware(LogAcessoMiddleware::class)
+        ->name('site.index');
+       
 Route::get('/contato', [ContatoController::class, 'contato'])->name('site.contato');
 Route::post('/contato', [ContatoController::class, 'salvar'])->name('site.contato');
 Route::get('/sobrenos', [SobreNosController::class, 'sobrenos'])->name('site.sobrenos');
@@ -33,14 +37,17 @@ Route::get('/login', function(){
 Route::prefix('/app')->group(function(){   
     Route::get('/clientes', function(){
         return 'Clientes';
-    })->name('app.clientes');
+    })
+    ->name('app.clientes');
     
-    Route::get('/fornecedores', [FornecedorController::class, 'index'])->name('app.fornecedores');
+    Route::get('/fornecedores', [FornecedorController::class, 'index'])
+    ->name('app.fornecedores');
     
     Route::get('/produtos', function(){
         return 'Produtos';
-    })->name('app.produtos');
-});
+    })
+    ->name('app.produtos');
+})->middleware('autenticacao:padrao,visitante');//passando um parâmetro para um respectivo middleware
 
 
 //redirecionando rotas

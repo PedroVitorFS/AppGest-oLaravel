@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fornecedor;
 
 class FornecedorController extends Controller
 {
     public function index(){
-        $fornecedores = ['fornecedor 1'];
+        $fornecedores = Fornecedor::all();
         return view('app.fornecedor.index', compact('fornecedores'));
     }
 }
