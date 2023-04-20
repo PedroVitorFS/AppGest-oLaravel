@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\FornecedorController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PrincipalController;
 use App\Http\Controllers\SobreNosController;
@@ -28,9 +29,8 @@ Route::get('/', [PrincipalController::class, 'principal'])
 Route::get('/contato', [ContatoController::class, 'contato'])->name('site.contato');
 Route::post('/contato', [ContatoController::class, 'salvar'])->name('site.contato');
 Route::get('/sobrenos', [SobreNosController::class, 'sobrenos'])->name('site.sobrenos');
-Route::get('/login', function(){
-    return 'Login';
-})->name('site.login');
+Route::get('/login/{erro?}', [LoginController::class, 'index'])->name('site.login');
+Route::post('/login', [LoginController::class, 'autenticar'])->name('site.login');
 
 
 //agrupando rotas pelo prefixo route

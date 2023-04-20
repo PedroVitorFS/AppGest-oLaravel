@@ -23,7 +23,11 @@ class ContatoController extends Controller
 
         //$contato->fill($request->all());
 
-        return view('site.contato', ['motivo_contatos' => $motivo_contatos]);
+        return view('site.contato', 
+        [
+                'motivo_contatos' => $motivo_contatos,
+                'titulo' => 'Contato'
+            ]);
     }
 
     public function salvar(Request $request){

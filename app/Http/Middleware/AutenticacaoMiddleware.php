@@ -6,6 +6,8 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use function PHPUnit\Framework\assertNotEmpty;
+
 class AutenticacaoMiddleware
 {
     /**
@@ -17,16 +19,10 @@ class AutenticacaoMiddleware
     {
        // return $next($request);
 
-       if($metodo_autenticacao == 'padrao'){
-            echo 'Verificar o usuário e senha no banco de dados';
-       }elseif($metodo_autenticacao == 'ldap'){
-            echo 'Verificar o usuário e senha no AD';
-       }
-
-       if(false){
-            return $next($request);
-       }else{
-        return Response('Acesso negado! Rota exige autenticação!!!');
-       }
+      if(assertNotEmpty( session()->get('email'))){
+          return $next($request);
+      }else{
+          return redirect()->route('site.login', ['erro'=> 2]);
+      }
     }
 }

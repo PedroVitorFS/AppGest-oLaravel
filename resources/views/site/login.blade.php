@@ -4,12 +4,22 @@
 
     <div class="conteudo-pagina">
         <div class="titulo-pagina">
-            <h1>Olá, eu sou o Super Gestão</h1>
+            <h1>Login</h1>
         </div>
 
         <div class="informacao-pagina">
-            <p>O Super Gestão é o sistema online de controle administrativo que pode transformar e potencializar os negócios da sua empresa.</p>
-            <p>Desenvolvido com a mais alta tecnologia para você cuidar do que é mais importante, seus negócios!</p>
+            <div style="width:30%; margin-left: auto; margin-right:auto">
+                <form action="{{route('site.login')}}" method="post">
+                    @csrf
+                    {{$errors->has('usuario') ? $errors->first('usuario') : ''}}
+                    <input name="usuario" value="{{old('usuario')}}" type="text" placeholder="Usuario" class="borda-preta">
+                    {{$errors->has('senha') ? $errors->first('senha') : ''}}
+                    <input name="senha" value="{{old('senha')}}" type="password" placeholder="Senha" class="borda-preta">
+                    <button type="submit" class="borda-preta">Acessar</button>
+                </form>
+
+                {{$erro ?? ''}}
+            </div>
         </div>  
     </div>
 
@@ -20,7 +30,8 @@
             <img src="{{asset('img/linkedin.png')}}">
             <img src="{{asset('img/youtube.png')}}">
         </div>
-        <div class="area-contato">
+
+        <div class="area-contato" >
             <h2>Contato</h2>
             <span>(11) 3333-4444</span>
             <br>
