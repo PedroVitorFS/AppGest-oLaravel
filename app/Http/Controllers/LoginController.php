@@ -44,10 +44,17 @@ class LoginController extends Controller
         if(isset($existe)){
             session()->push('email', $email);
             session()->push('senha', $password);
+
+            return redirect()->route('app.home');
         }else{
             return redirect()->route('site.login', ['erro' => 1]);
         }
 
         //echo "<pre>$existe</pre>";
+    }
+
+    public function sair(){
+        session_destroy();
+        return redirect()->route('site.index');
     }
 }
