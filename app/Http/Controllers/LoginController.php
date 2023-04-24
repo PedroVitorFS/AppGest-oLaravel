@@ -54,7 +54,8 @@ class LoginController extends Controller
     }
 
     public function sair(){
-        session_destroy();
+        session()->remove('email');
+        session()->remove('senha');
         return redirect()->route('site.index');
     }
 }

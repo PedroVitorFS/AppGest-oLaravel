@@ -1,4 +1,4 @@
-@extends('app.layouts._partials.topo')
+@extends('app.layouts.basico')
 @section('titulo', 'Cliente')
 
 @section('conteudo')
