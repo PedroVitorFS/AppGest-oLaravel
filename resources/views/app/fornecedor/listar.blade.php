@@ -19,7 +19,7 @@
         </div>
 
         <div class="informacao-pagina">
-            <div style="width:30%; margin-left:auto; margin-right: auto;">
+            <div style="width:100%; margin-left:auto; margin-right: auto;">
                 <table border="1" width="100%">
                     <thead>
                         <tr>
@@ -38,12 +38,16 @@
                                 <td>{{$fornecedor->site}}</td>
                                 <td>{{$fornecedor->uf}}</td>
                                 <td>{{$fornecedor->email}}</td>
-                                <td>Excluir</td>
-                                <td><a href="{{route('app.fornecedor.editar', $fornecedor->id)}}"></a></td>
+                                <td><a href="{{route('app.fornecedor.excluir', $fornecedor->id)}}">Excluir</a></td>
+                                <td><a href="{{route('app.fornecedor.editar', $fornecedor->id)}}">Editar</a> </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+
+                <div class="pagination">
+                    {{$fornecedores->appends($request)->links()}}
+                </div>
             </div>
         </div>
     </div>

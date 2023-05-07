@@ -196,3 +196,27 @@ button:hover {
 .redes-sociais img {
     margin: 0px 15px 0px 15px;
 }
+
+.pagination{
+    display: flex;
+    font-family: Poppins;
+    color: #595959;
+    justify-content: center;
+    align-content: space-around;
+    text-decoration: none;
+}
+
+.pagination a:link{
+    text-decoration: none !important;
+    color: #595959;
+}
+
+[aria-current]:not([aria-current="false"]) {
+    font-weight: 800;
+    font-size: 15px;
+}
+
+.pagination svg{
+    height: 25px;
+    align-items: center;
+}

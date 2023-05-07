@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Fornecedor;
+use Database\Factories\FornecedorFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,13 +14,14 @@ class FornecedorSeeder extends Seeder
      */
     public function run(): void
     {
-        $fornecedor = new Fornecedor();
+        /*$fornecedor = new Fornecedor();
         $fornecedor->nome = 'Fornecedor 100';
         $fornecedor->site = 'fornecedor100.com.br';
         $fornecedor->uf = 'CE';
         $fornecedor->email = 'contato@fornecedor100.com.br';
-        $fornecedor->save();
-
-        
+        $fornecedor->save();*/
+        FornecedorFactory::factoryForModel(Fornecedor::class)
+                                            ->count(100)
+                                            ->create();
     }
 }

@@ -120,7 +120,7 @@ use \App\Models\SiteContato;
 $contatos = SiteContato::whereNotNull('updated_at')->get();
 ```
 
-## Eloquent - Selecionando registors com base em parâmetros do tipo data e hora
+## Eloquent - Selecionando registros com base em parâmetros do tipo data e hora
 > O tipo de coluna deve ser do tipo date o timestamp
 
 Digamos que queremos buscar registros onde a data seja na data 31-08-2020:
@@ -300,7 +300,7 @@ $fornecedor = Fornecedor::find(2)
 
 ```
 
-## Eloquent - Selecionando e restaurante registros deletados com SoftDelete
+## Eloquent - Selecionando e restaurando registros deletados com SoftDelete
 Para termos acesso a todos os registros incluindo os que foram deletados no softDelete, podemos usar o withTrashed: 
 
 ```

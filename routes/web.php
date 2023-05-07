@@ -54,6 +54,9 @@ Route::prefix('/app')->group(function(){
     Route::get('/fornecedor/listar', [FornecedorController::class, 'listar'])
     ->name('app.fornecedor.listar');
 
+    Route::post('/fornecedor/listar', [FornecedorController::class, 'listar'])
+    ->name('app.fornecedor.listar');
+
     Route::get('/fornecedor/adicionar', [FornecedorController::class, 'adicionar'])
     ->name('app.fornecedor.adicionar');
 
@@ -62,9 +65,12 @@ Route::prefix('/app')->group(function(){
 
     Route::get('/fornecedor/editar/{id}', [FornecedorController::class, 'editar'])
     ->name('app.fornecedor.editar');
+
+    Route::get('/fornecedor/excluir/{id}', [FornecedorController::class, 'excluir'])
+    ->name('app.fornecedor.excluir');
     
-    Route::get('/produto', [ProdutoController::class, 'index'])
-    ->name('app.produto');
+    //produtos
+    Route::resource('/produto', ProdutoController::class); //associa todas as funções do produto controller a uma rota
     
 })->middleware('autenticacao:padrao,visitante');//passando um parâmetro para um respectivo middleware
 
@@ -85,8 +91,6 @@ Route::get('/teste/{p1}/{p2}', [TesteController::class, 'teste'])->name('teste')
 Route::fallback(function(){
     echo 'A rota acessada não existe. <a href="'.route('site.index').'">clique aqui</a> para ir para a página inicial';
 });
-
-
 
 /*
 Route::get(

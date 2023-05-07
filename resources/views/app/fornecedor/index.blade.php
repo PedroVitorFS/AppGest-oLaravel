@@ -21,6 +21,7 @@
         <div class="informacao-pagina">
             <div style="width:30%; margin-left:auto; margin-right: auto;">
                 <form method="post" action="{{route('app.fornecedor.listar')}}">
+                    @csrf
                     <input type="text" name="nome" placeholder="Nome" class="bord-preta">
                     <input type="text" name="site" placeholder="Site" class="bord-preta">
                     <input type="text" name="uf" placeholder="UF" class="bord-preta">

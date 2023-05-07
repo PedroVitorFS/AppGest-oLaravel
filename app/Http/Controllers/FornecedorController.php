@@ -13,15 +13,22 @@ class FornecedorController extends Controller
 
     public function listar(Request $request){
 
-        $fornecedores = Fornecedor::where('nome', 'like', $request->input('nome'))->where('site', 'like', $request->input('site'))
-        ->where('uf', 'like', $request->input('uf'))
-        ->where('email', 'like', $request->input('email'))
-        ->get();
+        $fornecedores = Fornecedor::where('nome', 'like', "%" . $request->input('nome') ?? "". "%")
+                                                 ->where('site', 'like',"%" . $request->input('site' ) ?? "" . "%")
+                                                 ->where('uf', 'like',"%". $request->input('uf') ?? "" ."%")
+                                                 ->where('email', 'like', "%" . $request->input('email') ?? "" . "%")
+                                                 ->orderBy('nome', 'asc')
+                                                 ->paginate(4);
+
+        //dd( Fornecedor::all());
         
-        return view('app.fornecedor.listar', ['fornecedores' => $fornecedores]);
+        return view('app.fornecedor.listar', 
+        ['fornecedores' => $fornecedores, 'request' => $request->all()]
+        );
     }
 
     public function adicionar(Request $request){
+
 
         $msg = '';
 
@@ -47,15 +54,27 @@ class FornecedorController extends Controller
 
             $msg = 'Atualização realizada com sucesso';
 
-            return redirect()->route('app.fornecedor.editar',['id' => $request->input('id'), 'msg' => $msg] );
+            return redirect()
+                        ->route(
+                            'app.fornecedor.editar',
+                            ['id' => $request->input('id'), 'msg' => $msg]
+                         ); //retornar o request a paginação e atualiza o fornecedor atualizado
         }
         return view('app.fornecedor.adicionar', ['msg' => $msg]);
     }
 
     public function editar($id, $msg = ''){
-        echo $id;
         $fornecedor = Fornecedor::find($id);
 
-        return view('app.fornecedor.adicionar', ['fornecedor'=> $fornecedor, 'msg' => $msg]);
+        return view(
+                'app.fornecedor.adicionar', 
+                ['fornecedor'=> $fornecedor, 'msg' => $msg]
+            );
+    }
+
+    public function excluir($id){
+        Fornecedor::find($id)->delete();//soft delete
+
+        return redirect()->route('app.fornecedor');
     }
 }
