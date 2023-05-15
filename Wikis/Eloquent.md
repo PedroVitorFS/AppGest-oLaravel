@@ -38,7 +38,7 @@ use \App\Models\SiteContato;
 $contatos = SiteContato::where('id', '>', 1)->get();
 
 //Trazendo todos os registros cujo nome seja diferente de Maria
-$contatos = SiteContato::whre('nome', '<>', 'Maria')->get();
+$contatos = SiteContato::where('nome', '<>', 'Maria')->get();
 
 
 //Trazendo os registros onde tenha a palavra detalhes em mensagens
